@@ -9,7 +9,7 @@ Xiaoqian Wu*, Yong-Lu Li*, Xinpeng Liu, Junyi Zhang, Yuzhe Wu, and Cewu Lu
 
 In this paper, we focus on learning human body-part interactiveness from a previously overlooked *global* perspective. We construct **body-part saliency maps** to mine informative cues from not only the targeted person, but also *other persons* in the image.
 
-![](intro.jpg)
+![](./assets/intro.jpg)
 
 ## Dependencies
 ```
