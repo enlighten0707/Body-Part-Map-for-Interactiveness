@@ -4,7 +4,7 @@ This repo contains the official implementation of our paper:
 **Mining Cross-Person Cues for Body-Part Interactiveness Learning in HOI Detection (ECCV 2022)**
 
 Xiaoqian Wu*, Yong-Lu Li*, Xinpeng Liu, Junyi Zhang, Yuzhe Wu, and Cewu Lu
-[[Paper]()] [[Supplementary Material]()] [[arXiv](https://arxiv.org/pdf/2207.14192v1.pdf)] 
+[[Paper]()] [[Supplementary Material]()] [[arXiv](https://arxiv.org/abs/2207.14192)] 
 (links upcoming)
 
 In this paper, we focus on learning human body-part interactiveness from a previously overlooked *global* perspective. We construct **body-part saliency maps** to mine informative cues from not only the targeted person, but also *other persons* in the image.
