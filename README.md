@@ -38,4 +38,11 @@ python -m torch.distributed.launch --nproc_per_node=4 main.py --config_path conf
 - [ ] Auxiliary benchmark code
 
 ## Citation
-Upcoming
+```
+@inproceedings{wu2022mining,
+  title={Mining Cross-Person Cues for Body-Part Interactiveness Learning in HOI Detection},
+  author={Xiaoqian Wu, Yong-Lu Li, Xinpeng Liu, Junyi Zhang, Yuzhe Wu, Cewu Lu},
+  booktitle={ECCV},
+  year={2022}
+}
+```
