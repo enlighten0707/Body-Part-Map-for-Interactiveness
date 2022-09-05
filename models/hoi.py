@@ -113,7 +113,7 @@ class DETR_PartMap(nn.Module):
         if "verb_labels" in self.config.losses:
              outputs_verb_class = self.verb_class_embed(hs_binary)
         else:
-            outputs_verb_class = torch.zeros((6, 4, self.num_queries, self.config.num_verb_classes)).cuda()
+            outputs_verb_class = torch.zeros((6, pos.shape[0], self.num_queries, self.config.num_verb_classes)).cuda()
         out = {'pred_obj_logits': outputs_obj_class[-1], 'pred_verb_logits': outputs_verb_class[-1],
                'pred_sub_boxes': outputs_sub_coord[-1], 'pred_obj_boxes': outputs_obj_coord[-1],}    
         outputs_binary_class, outputs_obj_class_ref, outputs_obj_coord_ref = None, None, None

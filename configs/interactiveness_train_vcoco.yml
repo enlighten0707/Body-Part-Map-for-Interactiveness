@@ -1,8 +1,8 @@
 # * Utilities
 output_dir: 
-  exp/interactiveness_train # path where to save, empty for no saving
+  exp/interactiveness_train_vcoco # path where to save, empty for no saving
 pretrained: 
-  params/detr-r50-pre-hico.pth # Pretrained model path
+  params/detr-r50-pre-vcoco.pth # Pretrained model path
 start_epoch: 0 # start epoch
 resume: 
 device: cuda # device to use for training / testing
@@ -15,7 +15,7 @@ lr: 1e-4
 lr_backbone: 1e-5
 batch_size: 4
 weight_decay: 1e-4
-epochs: 100
+epochs: 120
 lr_drop: 60
 clip_max_norm: 0.1 # gradient clipping max norm
 
@@ -34,31 +34,26 @@ dim_feedforward: 2048 # intermediate size of the feedforward layers in the trans
 hidden_dim: 256 # Size of the embeddings (dimension of the transformer)
 dropout: 0.1 # Dropout applied in the transformer
 nheads: 8 # Number of attention heads inside the transformer's attentions
-num_queries: 64  # Number of query slots
+num_queries: 100  # Number of query slots
 pre_norm: false
 aux_loss: true # Disables auxiliary decoding losses (loss at each layer)")
 
-# interactiveness
+# xinpeng added
 binary: true # Binary interactiveness detection
 cascaded: true  # Cascaded decoder
 dec_layers_box: 6 # Number of box decoding layers in the cascaded transformer
 dec_layers_verb: 6 # Number of verb decoding layers in the cascaded transformer
 
 # body-part interactiveness
-# binary_mode:
-#   # no_mask
-#   # intuitive
-#   final
-losses: ['obj_labels', 'sub_boxes', 'obj_boxes', 'binary_labels', 'binary_consistency'] # 'verb_labels', 'binary_6v_labels'
-# hard_mask: True
+losses: ['obj_labels', 'sub_boxes', 'obj_boxes', 'binary_labels', 'binary_consistency']
 
 # * Segmentation
 masks: false # Train segmentation head if the flag is provided
 
 # * HOI
 hoi: true # Train for HOI if the flag is provided
-num_obj_classes: 80 # Number of object classes
-num_verb_classes: 117 # Number of verb classes
+num_obj_classes: 81 # Number of object classes
+num_verb_classes: 29 # Number of verb classes
 subject_category_id: 0
 verb_loss_type: focal # (bce, focal), Loss type for the verb classification
 binary_loss_type: bce
@@ -69,7 +64,7 @@ set_cost_bbox: 2.5 # L1 box coefficient in the matching cost
 set_cost_giou: 1 # giou box coefficient in the matching cost
 set_cost_obj_class: 1 # Object class coefficient in the matching cost
 set_cost_verb_class: 0 # Verb class coefficient in the matching cost
-# interactiveness
+# xinpeng added
 set_cost_binary: 1 # Binary class coefficient in the matching cost
 
 # * Loss coefficients
@@ -80,15 +75,15 @@ giou_loss_coef: 1
 obj_loss_coef: 1
 verb_loss_coef: 1
 eos_coef: 0.1 # Relative classification weight of the no-object class
-# interactiveness
+# xinpeng added
 bin_loss_coef: 1
 
 # dataset parameters
-dataset_file: hico 
+dataset_file: vcoco
 coco_path:
 coco_panoptic_path:
 remove_difficult: false
-hoi_path: data/hico_20160224_det
+hoi_path: data/v-coco
 
 # * distributed training parameters
 world_size: 1 # number of distributed processes

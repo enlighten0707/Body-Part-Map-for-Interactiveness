@@ -26,11 +26,11 @@ For training, download the COCO pre-trained DETR [here](https://drive.google.com
 
 ## Training
 ```
-python -m torch.distributed.launch --nproc_per_node=4 main.py --config_path configs/interactiveness_train.yml
+python -m torch.distributed.launch --nproc_per_node=4 main.py --config_path configs/interactiveness_train_hico_det.yml
 ```
 ## Evaluation
 ```
-python -m torch.distributed.launch --nproc_per_node=4 main.py --config_path configs/interactiveness_eval.yml
+python -m torch.distributed.launch --nproc_per_node=4 main.py --config_path configs/interactiveness_eval_hico_det.yml
 ```
 
 ## TODO
