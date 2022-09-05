@@ -18,7 +18,7 @@ pytorch==1.9
 torchvision==0.10.1
 ```
 ## Data preparation
-For HICO-DET, download the pre-calculated pose keypoint files [here](https://drive.google.com/drive/folders/16fYJ5trvMzA6ZjHIJVHcPkgTLbiZSMtl?usp=sharing), and put them into `data` folder. They are used for body-part saliency map calculation.
+For HICO-DET&V-COCO, download the pre-calculated pose keypoint files [here](https://drive.google.com/drive/folders/16fYJ5trvMzA6ZjHIJVHcPkgTLbiZSMtl?usp=sharing), and put them into `data` folder. They are used for body-part saliency map calculation.
 
 HICO-DET dataset can be downloaded [here](https://drive.google.com/file/d/1QZcJmGVlF9f4h-XLWe9Gkmnmj2z1gSnk/view). After finishing downloading, unpack `hico_20160224_det.tar.gz` into `data` folder. We use the annotation files provided by the PPDM authors. The annotation files can be downloaded from [here](https://drive.google.com/drive/folders/1WI-gsNLS-t0Kh8TVki1wXqc3y2Ow1f2R).
 

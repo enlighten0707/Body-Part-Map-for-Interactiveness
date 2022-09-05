@@ -37,7 +37,6 @@ class VCOCO(torch.utils.data.Dataset):
 
         self.use_keypoint = use_keypoint
         self.part_bboxes_annotations = pickle.load(open("./data/share_label_10w.pkl", "rb"))
-        # self.labels_6v_dict = pickle.load(open("./data/labels_6v_vcoco.pkl", "rb"))
         
         self.part6_to_10v = {
             "foot": [0, 3],
@@ -142,10 +141,6 @@ class VCOCO(torch.utils.data.Dataset):
                         sub_boxes.append(sub_box)
                     pair2obj.append(obj_used[hoi['object_id']])
                     pair2sub.append(sub_used[hoi['subject_id']])
-                    # if img_anno['file_name'] in self.labels_6v_dict.keys() and sub_obj_pair in self.labels_6v_dict[img_anno['file_name']].keys():
-                    #     labels_6v.append(self.labels_6v_dict[img_anno['file_name']][sub_obj_pair])
-                    # else:
-                    #     labels_6v.append(np.zeros(6))
 
             if len(sub_obj_pairs) == 0:
                 target['obj_labels']  = torch.zeros((0,), dtype=torch.int64)
@@ -155,7 +150,6 @@ class VCOCO(torch.utils.data.Dataset):
                 target['pair2obj']    = torch.zeros((0,), dtype=torch.int64)
                 target['pair2sub']    = torch.zeros((0,), dtype=torch.int64)
                 target['binary_labels'] = torch.zeros((0,), dtype=torch.int64)
-                # target['binary_labels_6v']   = torch.zeros((0, 6), dtype=torch.float32)
             else:
                 target['obj_labels']  = torch.stack(obj_labels)
                 target['verb_labels'] = torch.as_tensor(verb_labels, dtype=torch.float32)
@@ -164,7 +158,6 @@ class VCOCO(torch.utils.data.Dataset):
                 target['pair2obj']    = torch.as_tensor(pair2obj, dtype=torch.int64)
                 target['pair2sub']    = torch.as_tensor(pair2sub, dtype=torch.int64)
                 target['binary_labels'] = torch.ones(target['verb_labels'].shape[0], dtype=torch.int64)
-                # target['binary_labels_6v']   = torch.as_tensor(labels_6v, dtype=torch.float32)
         else:
             if self._transforms is not None:
                 img, target = self._transforms(img, target)
