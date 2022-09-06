@@ -140,3 +140,43 @@ def evaluate_hoi(dataset_file, model, postprocessors, data_loader, subject_categ
 
     return stats, [gts, preds]
 
+def extract_feature(model: torch.nn.Module, criterion: torch.nn.Module, data_loader: Iterable, 
+                    device: torch.device, epoch: int, save_path: str):
+    model.eval()
+    metric_logger = utils.MetricLogger(delimiter="  ")
+    header = 'Extract {}: '.format(epoch)
+    print_freq = 200
+    cnt = 0
+    if not os.path.exists(save_path):
+        os.mkdir(save_path)
+    for batch in metric_logger.log_every(data_loader, print_freq, header):
+        samples, targets, depth, spmap, mask_part, img_size, id = batch
+        samples = samples.to(device)
+        if depth is not None:
+            depth = depth.to(device)
+        if spmap is not None:
+            spmap = spmap.to(device)
+        if mask_part is not None:
+            mask_part = mask_part.to(device)
+        if img_size is not None:
+            img_size = torch.stack(img_size, 0)
+            img_size = img_size.to(device)
+            
+        targets = [{k: v.to(device) for k, v in t.items() if k!="id" and k!="img_id"} for t in targets]
+        outputs = model(samples, depth, spmap, mask_part, img_size, targets)
+        
+        torch.save({"batch_shape": samples.decompose()[1].shape, 
+                "binary_decoder_weight": outputs["binary_decoder_weight"].detach().cpu().numpy(), 
+                "pred_sub_boxes": outputs["pred_sub_boxes"].detach().cpu().numpy(),
+                "pred_obj_boxes": outputs["pred_obj_boxes"].detach().cpu().numpy(),
+                "size": img_size, 
+                "id": id,
+                "pred_binary_logits": outputs['pred_binary_logits'].detach().cpu().numpy(),
+                "pred_part_binary_logits": outputs['pred_part_binary_logits'].detach().cpu().numpy(),
+                }, os.path.join(save_path, "att_{}_{}.pth".format(cnt, os.environ['LOCAL_RANK'])))
+        cnt += 1
+    # gather the stats from all processes
+    metric_logger.synchronize_between_processes()
+    print("Averaged stats:", metric_logger)
+    return {k: meter.global_avg for k, meter in metric_logger.meters.items()}
+ 

@@ -21,7 +21,7 @@ import os, yaml, re, pickle
 import datasets
 import util.misc as utils
 from datasets import build_dataset, get_coco_api_from_dataset
-from engine import train_one_epoch, evaluate_hoi
+from engine import train_one_epoch, evaluate_hoi, extract_feature
 from models import build_model
 from binary_evaluation import calc_binary as calc_binary_hico
 from binary_evaluation_vcoco import calc_binary as calc_binary_vcoco
@@ -347,9 +347,7 @@ def main(args):
         print("unexpected_keys", unexpected_keys)
     
     if args.extract:
-        # for epoch in range(args.epochs):
-        # extract_stats = extract_feature(model, criterion, data_loader_train, device, 0, args.output_dir)
-        extract_stats = extract_feature(model, criterion, data_loader_val, device, 0, args.output_dir)
+        extract_stats = extract_feature(model, criterion, data_loader_train, device, 0, args.output_dir)
         return
 
     if args.eval:

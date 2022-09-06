@@ -32,8 +32,15 @@ python -m torch.distributed.launch --nproc_per_node=4 main.py --config_path conf
 ```
 python -m torch.distributed.launch --nproc_per_node=4 main.py --config_path configs/interactiveness_eval_hico_det.yml
 ```
+## Visualization of Attention Results
+First extract attention weights
+```
+python -m torch.distributed.launch --nproc_per_node=4 main.py --config_path configs/interactiveness_train_hico_det.yml --extract
+```
+Then run [notebook/att.ipynb](./notebook/att.ipynb).
 
 ## TODO
+- [x] Code for attention visualization
 - [ ] The pretrained model and result file
 - [ ] Auxiliary benchmark code
 

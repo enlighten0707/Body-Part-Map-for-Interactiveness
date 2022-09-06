@@ -106,20 +106,21 @@ class DETR_PartMap(nn.Module):
 
         # binary_decoder
         if self.binary:
-            hs_binary, util_value = self.transformer.forward_binary(memory, mask, pos[-1], hs_box, \
+            hs_binary, util_value, binary_decoder_weight = self.transformer.forward_binary(memory, mask, pos[-1], hs_box, \
                                             mask_part, mask_object, mask_human, self.num_queries, matched_6v)
             
         # prediction
         if "verb_labels" in self.config.losses:
              outputs_verb_class = self.verb_class_embed(hs_binary)
         else:
-            outputs_verb_class = torch.zeros((6, pos.shape[0], self.num_queries, self.config.num_verb_classes)).cuda()
+            outputs_verb_class = torch.zeros((6, pos[-1].shape[0], self.num_queries, self.config.num_verb_classes)).cuda()
         out = {'pred_obj_logits': outputs_obj_class[-1], 'pred_verb_logits': outputs_verb_class[-1],
                'pred_sub_boxes': outputs_sub_coord[-1], 'pred_obj_boxes': outputs_obj_coord[-1],}    
         outputs_binary_class, outputs_obj_class_ref, outputs_obj_coord_ref = None, None, None
 
         pred_binary_logits = None
         if self.binary:
+            out["binary_decoder_weight"] = binary_decoder_weight
             pred_part_binary = util_value # (bz, num_query, 6, 2)
             pred_binary_logits = self.binary_class_embed(hs_binary) # (1, bz, num_query, 256) -> (1, bz, num_query, 2)
             out['pred_binary_logits'] = pred_binary_logits[-1] # (bz, num_query, 2)

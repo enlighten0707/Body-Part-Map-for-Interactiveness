@@ -142,7 +142,7 @@ class Transformer_PartMap(nn.Module):
         mask_2 = torch.minimum(mask_other_human, mask_part_dynamic)
         # print("mask_2",(~mask_2).sum(-1)[0])
         mask_2 = mask_2.unsqueeze(1).expand(-1, self.nhead, -1, -1).flatten(0, 1)
-        out_binary, _ = self.binary_decoder_2(
+        out_binary, binary_decoder_weight_2 = self.binary_decoder_2(
                                             tgt_verb,
                                             memory, pos=pos_embed, 
                                             query_pos=part_query,
@@ -153,14 +153,14 @@ class Transformer_PartMap(nn.Module):
         mask_3 = mask_part_dynamic
         # print("mask_3",(~mask_3).sum(-1)[0])
         mask_3 = mask_3.unsqueeze(1).expand(-1, self.nhead, -1, -1).flatten(0, 1) # (bz*num_heads, num_query, H/32*W/32)
-        out_binary, _ = self.binary_decoder_3(out_binary[-1], 
+        out_binary, binary_decoder_weight_3 = self.binary_decoder_3(out_binary[-1], 
                                             memory, pos=pos_embed, 
                                             query_pos=part_query,
                                             memory_key_padding_mask=mask,
                                             memory_mask=mask_3,
                                             )
         # the k-th body-part of the targeted person
-        out_binary, _ = self.binary_decoder_4(out_binary[-1], 
+        out_binary, binary_decoder_weight_4 = self.binary_decoder_4(out_binary[-1], 
                                             memory, pos=pos_embed, 
                                             query_pos=part_query,
                                             memory_key_padding_mask=mask,
@@ -168,7 +168,8 @@ class Transformer_PartMap(nn.Module):
                                             )
         out_binary = out_binary.transpose(1, 2)
 
-        return out_binary, score_part
+        return out_binary, score_part,\
+            torch.stack([binary_decoder_weight_2, binary_decoder_weight_3, binary_decoder_weight_4], 0)
 
 
 class Transformer(nn.Module):
