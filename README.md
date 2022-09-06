@@ -4,8 +4,8 @@ This repo contains the official implementation of our paper:
 **Mining Cross-Person Cues for Body-Part Interactiveness Learning in HOI Detection (ECCV 2022)**
 
 Xiaoqian Wu*, Yong-Lu Li*, Xinpeng Liu, Junyi Zhang, Yuzhe Wu, and Cewu Lu
-[[Paper](https://arxiv.org/pdf/2207.14192)] [[Supplementary Material]()] [[arXiv](https://arxiv.org/abs/2207.14192)] 
-(links upcoming)
+
+[[Paper](https://arxiv.org/pdf/2207.14192v1.pdf)] 
 
 In this paper, we focus on learning human body-part interactiveness from a previously overlooked *global* perspective. We construct **body-part saliency maps** to mine informative cues from not only the targeted person, but also *other persons* in the image.
 
@@ -37,7 +37,7 @@ First extract attention weights
 ```
 python -m torch.distributed.launch --nproc_per_node=4 main.py --config_path configs/interactiveness_train_hico_det.yml --extract
 ```
-Then run [notebook/att.ipynb](./notebook/att.ipynb).
+Then run [notebooks/att.ipynb](./notebooks/att.ipynb).
 
 ## TODO
 - [x] Code for attention visualization
