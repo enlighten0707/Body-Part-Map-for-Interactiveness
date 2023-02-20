@@ -9,6 +9,8 @@ Xiaoqian Wu*, Yong-Lu Li*, Xinpeng Liu, Junyi Zhang, Yuzhe Wu, and Cewu Lu
 
 In this paper, we focus on learning human body-part interactiveness from a previously overlooked *global* perspective. We construct **body-part saliency maps** to mine informative cues from not only the targeted person, but also *other persons* in the image.
 
+Note: Our method *does not* depend on extra supervision. The main model of our method is trained **without extra PaSta labels**.
+
 ![](./assets/intro.jpg)
 
 ## Dependencies
@@ -42,11 +44,6 @@ First extract attention weights
 python -m torch.distributed.launch --nproc_per_node=4 main.py --config_path configs/interactiveness_train_hico_det.yml --extract
 ```
 Then run [notebooks/att.ipynb](./notebooks/att.ipynb).
-
-## TODO
-- [x] Code for attention visualization
-- [x] The result file
-- [x] Auxiliary benchmark code
 
 ## Citation
 ```
